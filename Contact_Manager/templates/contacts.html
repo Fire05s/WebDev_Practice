@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            html,body {
+                height: 100%;
+            }
+    </style>
+        <title>My Contacts</title>
+    </head>
+    <body>
+        <!-- <div class = 'row justify-content-center'>
+            <form>
+                <div>
+                    <textarea></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+          </div> -->
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class = 'alert alert-primary alert-dismissible fade show' role = 'alert'>
+                        {{message}}
+                        <button type = 'button' class = 'btn-close' data-bs-dismiss = 'alert' aria-label = 'Close'></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class = 'container bg-dark p-5'>
+            <h1 class = 'text-white text-center'>My Contacts!</h1>
+        </div>
+        <br>
+        <div class = 'container bg-light p-2 rounded-2'>
+            <form method = 'POST'>
+                <div>
+                    <h3><strong>NEW CONTACT: </strong></h3>
+                </div>
+                <div class = 'mb-3'>
+                    <label for = 'Name' class = 'form-label'><strong>Name: </strong></label>
+                    <input name = 'Name' type = 'text'>
+                </div>
+                <div>
+                    <label for = 'Phone Number' class = 'form-label'><strong>Phone Number: </strong></label>
+                    <input name = 'Phone Number' type = 'number'>
+                </div>
+                <div class = 'mb-3'>
+                    <label for = 'Email' class = 'form-label'><strong>Email: </strong></label>
+                    <input name = 'Email' type = 'email'>
+                </div>
+                <button type = 'submit' name = 'save_contact' class = 'btn btn-sm btn-primary mb-3'><strong>SUBMIT</strong></button>
+            </form>
+        </div>
+        <br>
+        <div class = 'container p-0 rounded-2'>
+            <h5 class = 'text-black'>PREVIOUS CONTACTS: </h5>
+            <div class = 'row'>
+                {% for contact in contacts %}
+                <div class = 'card bg-dark mb-3 mr-3 w-25'>
+                    <div class = 'card-header d-flex float-right'><a href = "/delete/{{contact['_id']}}" class = 'btn btn-sm btn-danger'><strong>X</strong></a></div>
+                    <div class = 'card-body'>
+                        <div class = 'd-flex flex-column justify-content-center'>
+                            <!-- <img style = 'width:100px; height:100px; margin-left:30%; margin-right:25%' class = 'rounded-circle' src = 'static/contactpic.jpg'> -->
+                            <img src = 'https://placeimg.com/200/200/people'>
+                            <h5 class = 'card-title text-white text-center'>{{contact['Name']}}</h5>
+                            <h5 class = 'card-title text-white text-center'>{{contact['Phone Number']}}</h5>
+                            <h5 class = 'card-title text-white text-center'>{{contact['Email']}}</h5>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

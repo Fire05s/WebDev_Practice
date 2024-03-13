@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+        <title></title>
+    </head>
+    <body>
+        <h1>My Notes</h1>
+        <div>
+            <label for = 'heading'>Heading: </label>
+            <input id = 'heading'>
+            <br>
+            <label for = 'desc'>Description:</label>
+            <input id = 'desc'>
+            <br>
+            <label for = 'link'>Reference Link: </label>
+            <input id = 'link'>
+            
+            <br>
+            <button id = 'addn'>Add Note</button>
+        </div>
+
+        <br>
+
+        <h4>Formatting Options</h4>
+        <select id = "font option" onchange = "changeNoteFont (this)">
+            <option value = "" disabled selected hidden>Select font for notes:</option>
+            <option value = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen">Default</option>
+            <option value = "'Courier New', Courier, monospace">Courier</option>
+            <option value = "fantasy">Fantasy</option>
+            <option value = "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Gothic</option>
+        </select>
+
+        <br>
+
+        <div>
+            <label for = 'colorpick'>Background Note Color:</label>
+            <input id = 'colorpick' type = 'color' oninput = "changeColor (this)">
+        </div>
+
+        <div>
+            <label for = 'textcolor'>Note Text Color:</label>
+            <input id = 'textcolor' type = 'color' oninput = 'changeTextColor (this)'>
+        </div>
+        
+        <br>
+
+        <input type = 'text' oninput = 'search (this.value)'>
+
+        <br>
+        
+        <div id = 'noteslist'>
+            <div class = 'note'>
+            </div>
+        </div>
+        <p id = 'nf' style = 'display: none;'>Not Found.</p>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        axios.get ("https://reqres.in/api/xyz")
+            .then(function (response) {
+                // handle success
+                console.log(response);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .then(function () {
+                // always executed
+            });
+        // console.log (document)
+        // const noteListDiv = document.getElementById ('noteslist');
+        // console.log (noteListDiv);
+        // console.log (document.getElementById ('fn').innerHTML);
+        // const paragraphElement = document.querySelectorAll ('#noteslist p');
+        // console.log (paragraphElement)
+
+        // a = {'head':'h1','p':'sldkfj','link':'slkjd.com','ch':''};
+        // localStorage.setItem ("notes","[]");
+        // let notes = JSON.parse (localStorage.getItem ("notes"));
+        // notes.push (a);
+        // console.log (notes);
+
+        const button = document.getElementById ('addn');
+        button.addEventListener ('click',addNote);
+
+        const allNotes = JSON.parse (localStorage.getItem ("notes"));
+        allNotes.forEach(element => {
+            renderNote (element ['head'],element ['desc'],element ['link'],element ['chbox'])
+        });
+        
+        console.log (document.getElementById ("noteslist").style)
+        
+        const addToLocalStorage = (noteObject) => {
+            console.log (noteObject);
+            const noteArray = JSON.parse (localStorage.getItem ("notes"));
+            noteArray.push (noteObject);
+            localStorage.setItem ("notes",JSON.stringify (noteArray));
+            let notes = JSON.parse (localStorage.getItem ("notes"));
+            console.log (notes);
+        }
+
+        const changeNoteFont = (fontSelect) => {
+            console.log (fontSelect);
+            const noteslist = document.getElementById ('noteslist');
+            noteslist.style ['font-family'] = fontSelect.value
+        }
+
+        function changeColor (element) {
+            console.log (element);
+            const notesArrayElements = document.getElementById('noteslist').children;
+            Array.from (notesArrayElements).forEach ((elem) => {
+                elem.style ['background-color'] = element.value;
+            });
+        }
+
+        function changeTextColor (element) {
+            console.log (element);
+            const noteslist = document.getElementById ('noteslist');
+            noteslist.style.color = element.value;
+        }
+
+        function search (str) {
+            console.log (str);
+            const notes = document.getElementsByClassName ('note');
+            console.log (notes);
+            const notfound = document.getElementById ('nf');
+            notfound.style.display = 'block';
+            Array.from (notes).forEach ((elem) => {
+                if (elem.textContent.toLowerCase().includes (str.toLowerCase ())){
+                    notfound.style.display = 'none';
+                    elem.style.display = 'block';
+                }
+                else {
+                    elem.style.display = 'none';
+                }
+            })
+        }
+
+        function addNote (){
+            const heading = document.getElementById ('heading');
+            const link = document.getElementById ('link');
+            const desc = document.getElementById ('desc');
+            // const ch = document.getElementById ('chbox');
+            dict1 = {'head':heading.value,'desc':desc.value,'link':link.value,'ch':''};
+            addToLocalStorage (dict1);
+            renderNote (heading.value,desc.value,link.value,'');
+            document.getElementById ('heading').value = '';
+            document.getElementById ('desc').value = '';
+            document.getElementById ('link').value = '';
+        }
+
+        const editHeading = (element) => {
+            // element.style.color = "gray";
+            // var oldHeading = element.parentNode.previousElementSibling;
+            // const newHeading = prompt ('Enter new heading: ',oldHeading.href);
+            // console.log (newHeading);
+            // oldHeading.textContent = newHeading;
+            // const noteArray = JSON.parse (localStorage.getItem('notes'));
+            // console.log (noteArray);
+            // let noteElement = element.parentNode.parentNode.parentNode;
+            // console.log (noteElement);
+            // let index = -1;
+            // while (noteElement.nextElementSibling != null) {
+            //     index ++;
+            //     noteElement = noteElement.nextElementSibling;
+            // }
+            // noteArray [index].head = newHeading;
+            // localStorage ['notes'] = JSON.stringify (noteArray);
+
+            console.log ('element',element);
+            const oldInput = document.getElementById ('replaceheading');
+            const newHeading = oldInput.value;
+            let noteElement = oldInput.parentNode.parentNode;
+            console.log ('newheading',oldInput, oldInput.value);
+            const icon = oldInput.nextElementSibling.firstElementChild;
+            console.log (icon);
+            icon.classList.remove ('fa-check');
+            icon.classList.add ('fa-pencil');
+            oldInput.outerHTML = `<h3>${oldInput.value}</h3>`;
+            icon.onclick = function () {editHeading1 (icon);}
+            const noteArray = JSON.parse (localStorage.getItem('notes'));
+            console.log (noteArray);
+            console.log (noteElement);
+            let index = -1;
+            while (noteElement.nextElementSibling != null) {
+                index ++;
+                noteElement = noteElement.nextElementSibling;
+            }
+            noteArray [index].head = newHeading;
+            localStorage ['notes'] = JSON.stringify (noteArray);
+        }
+        const editURL = (element) => {
+            element.style.color = "gray";
+            var oldURL = element.parentNode.previousElementSibling;
+            console.log (oldURL);
+            const newURL = prompt ('Enter new link: ',oldURL.href);
+            // console.log (newURL);
+            oldURL.textContent = newURL;
+            oldURL.href = newURL;
+            const noteArray = JSON.parse (localStorage.getItem('notes'));
+            console.log (noteArray);
+            let noteElement = element.parentNode.parentNode.parentNode;
+            let index = -1;
+            console.log (noteElement);
+            while (noteElement.nextElementSibling != null) {
+                index ++;
+                console.log (index);
+                noteElement = noteElement.nextElementSibling;
+            }
+            noteArray [index].link = newURL;
+            localStorage ['notes'] = JSON.stringify (noteArray);
+        }
+
+        const editHeading1 = (element) => {
+            const prevHeading = element.parentNode.previousElementSibling;
+            const prevHeadingContent = element.parentNode.previousElementSibling.textContent;
+            console.log (prevHeading);
+            prevHeading.outerHTML = `<input id = 'replaceheading' value = '${prevHeadingContent}' />`;
+            element.classList.remove ('fa-pencil');
+            element.classList.add ('fa-check');
+            element.onclick = function () {editHeading (prevHeading);}
+        }
+        // const confirm = 
+        const editURL1 = (element) => {
+            console.log ();
+        }
+        const deleteNote = (element) => {
+            let deleteElement = element.parentNode.parentNode.parentNode;
+            console.log (deleteElement);
+            const noteArray = JSON.parse (localStorage.getItem('notes'));
+            let index = -1;
+            while (deleteElement.nextElementSibling != null) {
+                index ++;
+                deleteElement = deleteElement.nextElementSibling;
+            }
+            noteArray.splice (index,1);
+            element.parentNode.parentNode.parentNode.remove ();
+            localStorage ['notes'] = JSON.stringify (noteArray);
+        }
+
+        function renderNote (head,paragraph,link,ch){
+            const h3Element = document.createElement ('h3');
+            h3Element.textContent = head;
+            const iElement = document.createElement ('div');
+            iElement.innerHTML = '<i class="fa fa-solid fa-pencil" onclick = "editHeading1(this); console.log (this);"></i>';
+            iElement.style.color = "black";
+            const pElement = document.createElement ('p');
+            pElement.textContent = paragraph;
+            const lElement = document.createElement ('a');
+            lElement.href = link;
+            lElement.textContent = link;
+            lElement.target = "_blank";
+            const iElement1 = document.createElement ('div');
+            iElement1.innerHTML = '<i class="fa fa-solid fa-pencil" onclick = "editURL(this); console.log (this);"></i>';
+            iElement1.style.color = "black";
+            // const newURL = prompt ("Enter new URL", URLspan.href);
+            // if (newURL != null) {
+            //     lElement.href = newURL;
+            //     lElement.textContent = newURL;
+            //     lElement.target = "_blank";
+            // }
+            const iElement2 = document.createElement ('div');
+            iElement2.innerHTML = '<i class = "fa fa-solid fa-trash" onclick = "deleteNote(this); console.log (this);"></i>';
+            iElement2.style.color = 'black';
+            const divElement1 = document.createElement ('div');
+            divElement1.appendChild (h3Element);
+            divElement1.appendChild (iElement);
+            divElement1.appendChild (iElement2);
+            divElement1.className = 'd-flex';
+            const divElement2 = document.createElement ('div');
+            divElement2.appendChild (lElement);
+            divElement2.appendChild (iElement1);
+            divElement2.className = 'd-flex';
+            // const labElement = document.createElement ('label');
+            // labElement.textContent = 'Done?';
+            // const chElement = document.createElement ('input');
+            // chElement.id = 'chbox';
+            // chElement.type = "checkbox";
+            // chElement.value = ch;
+            // labElement.htmlFor = 'chbox';
+            // chElement.classList.add ('ml-2');
+            // divElement1.appendChild (labElement);
+            // divElement1.appendChild (chElement);
+            const divElement = document.createElement ('div');
+            divElement.appendChild (divElement1);
+            divElement.appendChild (pElement);  
+            divElement.appendChild (divElement2);
+            divElement.classList.add ('note');
+            const notesList = document.getElementById ('noteslist');
+            notesList.prepend (divElement);
+        }
+    </script>
+</html>

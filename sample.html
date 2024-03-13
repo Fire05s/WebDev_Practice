@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello World!</title>
+        <style>
+            .bold_red_text {
+                color: red;
+            }
+            table {
+                border: 1px solid black;
+            }
+            th {
+                width: 5%;
+                height: 100px;
+            }
+            .flex-container {
+                background-color: blue;
+                display:flex;
+                flex-direction:row;
+                justify-content: space-evenly;
+                flex-wrap: wrap;
+            }
+            .flex-item {
+                color:white;
+                background-color: green;
+                width: 200px;
+                height: 75px;
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id = "heading">Heading 1</h1>
+        <h2>Heading 2</h2>
+        <h3 class = "bold_red_text">Heading 3</h3>
+        <h4 style = "color:green;">Heading 4</h4>
+        <h5>Heading 5</h5>
+        <h6>Heading 6</h6>
+        <hr>
+        <p class = "bold_red_text">Hello my name is Brandon</p>
+        <hr>
+        <ul name = "programming_languages">
+            Programming Languages
+            <li>Python</li>
+            <li>Java</li>
+        </ul>
+        <hr>
+        <!-- <ol name id = "grocery_list">
+            Grocery List
+            <li>Apples</li>
+            <li>Oranges</li>
+        </ol> -->
+        <div style = "margin-left:100px;">
+            <img src = "static/shark.jpg" alt = "Shark">
+            <hr>
+            <audio controls src = "static/Correct_Sound.mp3">Audio File</audio>
+            <hr>
+            <p>Click <a href = "https://www.google.com/">Here!</a></p>
+            <hr>
+        </div>
+        <button type = "button">
+            Click Me
+        </button>
+
+        <table>Weekend Activities
+            <thead>
+                <tr class = "bold_red_text">
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style = 'color:green;'>School</td>
+                    <td>School</td>
+                    <td>School</td>
+                    <td>School</td>
+                    <td>School</td>
+                    <td>Basketball</td>
+                    <td>Coding</td>
+                </tr>
+                <tr>
+                    <td style = 'color:green;'>School</td>
+                    <td>School</td>
+                    <td>School</td>
+                    <td>School</td>
+                    <td>School</td>
+                    <td>Basketball</td>
+                    <td>Coding</td>
+                </tr>
+                <tr>
+                    <td style = 'color:green;'>School</td>
+                    <td>School</td>
+                    <td>School</td>
+                    <td>School</td>
+                    <td>School</td>
+                    <td>Basketball</td>
+                    <td>Coding</td>
+                </tr>
+                <tr>
+                    <td style = 'color:green;'>Homework</td>
+                    <td>Homework</td>
+                    <td>Homework</td>
+                    <td>Homework</td>
+                    <td>Homework</td>
+                    <td>Homework</td>
+                    <td>Homework</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- post or get for method 
+        name - placeholder (server)
+        id - identifier (client) -->
+        <form method = "post"> 
+            <div>
+                <label>Enter your name:</label>
+                <input type = 'text' name = 'name' id = 'name' required minlength = '4' maxlength= "8">
+            </div>
+            <div>
+                <label>Enter your email:</label>
+                <input type = 'email' name = 'email' id = 'email' required>
+            </div>
+            <div>
+                <label>Enter your password:</label>
+                <input type = 'password' name = 'password' id = 'pass' required minlength = '8'>
+            </div>
+            <div>
+                <input id = 'productID' name = 'product' value = '5'>
+            </div>
+            <div>
+                <input type = 'submit' value = 'Subscribe!'>
+            </div>
+        </form>
+
+        <p>Choose your pets' features:</p>
+        <div>
+            <input type = 'checkbox' id="furry" name="furry" checked>
+            <label for = "furry">Furry</label>
+        </div>
+        <div>
+            <input type = "checkbox" id="tail" name="tail">
+            <label for = "tail">Tail</label>
+        </div>
+
+        <!-- separate drones for independent sets -->
+        <p>Select your favorite duck:</p>
+        <div>
+            <input type = 'radio' id="huey" name = 'drone' value = 'huey' checked>
+            <label for = 'huey'>Huey</label>
+        </div>
+        <div>
+            <input type = 'radio' id = 'dewey' name = 'drone' value = 'dewey'>
+            <label for = 'dewey'>Dewey</label>
+        </div>
+        <div>
+            <input type ='radio' id ='louie' name = 'drone' value = 'louis'>
+            <label for = 'louie'>Louie</label>
+        </div>
+        <p>Choose your room's colors</p>
+        <div>
+            <input type = 'color' id = 'head' name = 'head' value = '#e66465'>
+            <label for = 'head'>Wall</label>
+        </div>
+        <div>
+            <input type = 'color' id = 'body' name = 'body' value = '#f6b73c'>
+            <label for = 'body'>Ceiling</label>
+        </div>
+        <div>
+            <label for = 'start'>Start Date</label>
+            <input type = 'date' id = 'start' name = 'trip-start' value = '2018-07-22' min = '2018-01-01' max = '2018-12-31'>
+        </div>
+        <div>
+            <label for = 'avatar'>Choose a profile picture:</label>
+            <input type = 'file' id = 'avatar' name = 'avatar' accept = 'image/png,image/jpeg'>
+        </div>
+        <!-- style: b, em, i, small, strong, sub, sup, ins, del, mark -->
+        <b>
+            Text
+        </b>
+
+        <div class = 'flex-container'>
+            <div class = 'flex-item'>Flex Item 1</div>
+            <div class = 'flex-item'>Flex Item 2</div>
+            <div class = 'flex-item'>Flex Item 3</div>
+            <div class = 'flex-item'>Flex Item 4</div>
+            <div class = 'flex-item'>Flex Item 5</div>
+            <div class = 'flex-item'>Flex Item 6</div>
+            <div class = 'flex-item'>Flex Item 7</div>
+            <div class = 'flex-item'>Flex Item 8</div>
+        </div>
+        
+    </body>
+</html>
